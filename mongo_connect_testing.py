@@ -2,7 +2,7 @@ import MongodbDAO
 import psycopg2
 
 #connect to the db
-con = psycopg2.connect('host=localhost dbname=huwebshop user=postgres password=12345')
+con = psycopg2.connect('host=localhost dbname=huwebshop user=postgres password=Levidov123')
 
 # informatie tonen over wat data
 db = MongodbDAO.getMongoDB()
@@ -86,6 +86,7 @@ def product_converter():
 			skipcounter+=1
 			continue
 
+
 		# fast mover
 		if 'fast_mover' in product.keys():
 			fast_mover = product['fast_mover']
@@ -156,7 +157,6 @@ def product_converter():
 			"INSERT INTO product (_id, name, brand, category, description, fast_mover, herhaalaankopen, selling_price, doelgroep, sub_category, sub_sub_category, sub_sub_sub_category) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
 		(product_id, name, brand, category, description, fast_mover, herhaalaankopen, selling_price, doelgroep, sub_category,
 		sub_sub_category, sub_sub_sub_category))
-
 
 
 def previously_recommended_filler():
@@ -322,7 +322,8 @@ def session_filler():
 			print('geen id')
 
 		try:
-			session_buid = str(session["buid"]) # converts session buid to string
+			session_buid = str(session["buid"][0]) # converts session buid to string
+			print(session_buid)
 		except:
 			print("Session buid invalid")
 
@@ -359,8 +360,6 @@ def session_filler():
 			con.rollback()
 	print(f'Done! We inserted {insert_counter} documents, got unique exception: {unique_exceptionError_counter} times')
 	print(f'Got foreign key error {ForeignKey_exceptionError_counter} times, Too long buid error: {buid_Exception_counter} times, and failed {failed_sql_counter} sql queries.')
-
-
 
 def order_filler():
 	'''
